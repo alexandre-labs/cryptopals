@@ -1,0 +1,8 @@
+[package]
+name = "numberconv"
+version = "0.1.0"
+authors = ["Alexandre <0x41e@protonmail.ch>"]
+
+[dependencies]
+maplit = "1.0.0"
+num-traits = "0.1.41"
