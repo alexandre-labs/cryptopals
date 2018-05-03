@@ -18,13 +18,11 @@ Always operate on raw bytes, never on encoded strings. Only use hex and base64 f
 
 import base64
 
+from cryptopals.utils import split_string_into_chunks
+
 
 def convert_hex_to_ascii(hex_string: str) -> str:
-
-    # String spplited into hex chunks of 2 characters
-    hex_chunks = [hex_string[n: n + 2] for n in range(0, len(hex_string), 2)]
-
-    return ''.join(chr(int(chunk, 16)) for chunk in hex_chunks)
+    return ''.join(chr(int(chunk, 16)) for chunk in split_string_into_chunks(hex_string, 2))
 
 
 def convert_ascii_to_base64(ascii_string: str) -> bytes:
