@@ -1,7 +1,8 @@
 import collections
+import itertools
 import random
 import string
-from typing import Tuple
+from typing import Iterable, Tuple, Union
 
 
 def generate_random_hex_chunks(chunk_size: int = 2) -> str:
@@ -34,3 +35,12 @@ def score_hex_string(hex_string: str) -> collections.Counter:
 
 def get_most_frequent_hex(hex_string: str) -> Tuple[str, int]:
     return max(score_hex_string(hex_string).items(), key=lambda pair: pair[1])
+
+
+def get_hex_combinations(eager: bool = False) -> Union[Tuple[str, ...], Iterable[Tuple[str, ...]]]:
+
+    if eager:
+        return tuple(
+            f'{comb[0]}{comb[1]}' for comb in itertools.combinations(set(char.lower() for char in string.hexdigits), 2)
+        )
+    return itertools.combinations(set(char.lower() for char in string.hexdigits), 2)
