@@ -17,14 +17,17 @@ Achievement Unlocked
 You now have our permission to make "ETAOIN SHRDLU" jokes on Twitter.
 """
 from operator import xor
+from typing import Optional
 
 from cryptopals import utils
 
 
-def decrypt_message(hex_string: str) -> str:
+def decrypt_message(hex_string: str, most_frequent_hex: Optional[str] = None) -> str:
 
-    # The underscore would be the score. 'score' means how many times this hex appears in the string...
-    most_frequent_hex, _ = utils.get_most_frequent_hex(hex_string)
+    if not most_frequent_hex:
+
+        # The underscore would be the score. 'score' means how many times this hex appears in the string...
+        most_frequent_hex, _ = utils.get_most_frequent_hex(hex_string)
 
     # mf_ -> most frequent
     # Getting the ascii letter related to the most frequent hex, but in uppercase
