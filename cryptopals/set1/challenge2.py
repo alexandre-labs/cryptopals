@@ -17,7 +17,7 @@ If your function works properly, then when you feed it the string:
 """
 import operator
 
-from cryptopals.utils import split_hex_string_into_int_chunks
+from ..utils import split_hex_string_into_int_chunks
 
 
 def get_fixed_xor(hex_string_a: str, hex_string_b: str) -> str:

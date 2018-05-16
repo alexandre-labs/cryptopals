@@ -18,7 +18,7 @@ Always operate on raw bytes, never on encoded strings. Only use hex and base64 f
 
 import base64
 
-from cryptopals.utils import split_string_into_chunks
+from ..utils import split_string_into_chunks
 
 
 def convert_hex_to_ascii(hex_string: str) -> str:
