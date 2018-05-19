@@ -1,3 +1,15 @@
 # Solutions for the cryptopals challenge
 
-TODO: update this readme
+
+## Installing deps
+
+```python
+pip install requirements.txt
+```
+
+
+## Running tests
+
+```python
+pytest --flake8 --mypy-ignore-missing-imports
+```
