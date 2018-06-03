@@ -29,10 +29,7 @@ def decrypt_message(hex_string: str, most_frequent_hex: Optional[str] = None) ->
         # The underscore would be the score. 'score' means how many times this hex appears in the string...
         most_frequent_hex, _ = utils.get_most_frequent_hex(hex_string)
 
-    # mf_ -> most frequent
-    # Getting the ascii letter related to the most frequent hex, but in uppercase
-    mf_ascii_int = ord(chr(int(most_frequent_hex, 16)).upper())
-
+    mf_related_ascii = chr(int(most_frequent_hex, 16)).upper()  # consider the key uppercased
     int_chunks = utils.split_hex_string_into_int_chunks(hex_string)
 
-    return ''.join(chr(xor(mf_ascii_int, chunk)) for chunk in int_chunks)
+    return ''.join(chr(xor(ord(mf_related_ascii), chunk)) for chunk in int_chunks)

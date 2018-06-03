@@ -352,9 +352,13 @@ def find_xord_hex_string():
     for hex_string in FILE_DATA:
         for hex_chunk in utils.get_hex_combinations(eager=True):
 
-            message = challenge3.decrypt_message(hex_string, hex_chunk)
-            ascii_chars_rate = sum(1 if (c in string.ascii_letters or c == ' ') else 0 for c in message) / len(message)
-            if ascii_chars_rate > best_ascii_chars_rate[0]:
-                best_ascii_chars_rate = (ascii_chars_rate, message)
+            try:
+                message = challenge3.decrypt_message(hex_string, hex_chunk)
+            except:
+                continue
+            else:
+                ascii_chars_rate = sum(1 if (c in string.ascii_letters or c == ' ') else 0 for c in message) / len(message)
+                if ascii_chars_rate > best_ascii_chars_rate[0]:
+                    best_ascii_chars_rate = (ascii_chars_rate, message)
 
     return best_ascii_chars_rate

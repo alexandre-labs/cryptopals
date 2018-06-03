@@ -1,8 +1,10 @@
 import collections
+import functools
 import itertools
+import operator
 import random
 import string
-from typing import Iterable, Tuple, Union
+from typing import Any, Iterable, Tuple, Union
 
 
 def generate_random_hex_chunks(chunk_size: int = 2) -> str:
@@ -13,7 +15,7 @@ def generate_random_hex_chunks(chunk_size: int = 2) -> str:
     return ''.join(random.choices(string.hexdigits, k=chunk_size))
 
 
-def generate_random_hex_strings(chunk_size:int = 2, string_size:int  = 256) -> str:
+def generate_random_hex_strings(chunk_size: int = 2, string_size: int = 256) -> str:
 
     if not all([chunk_size % 2 == 0, string_size % 2 == 0]):
         raise ValueError('Chunk size and string_size should be a multiple of 2.')
@@ -44,3 +46,25 @@ def get_hex_combinations(eager: bool = False) -> Union[Tuple[str, ...], Iterable
             f'{comb[0]}{comb[1]}' for comb in itertools.combinations(set(char.lower() for char in string.hexdigits), 2)
         )
     return itertools.combinations(set(char.lower() for char in string.hexdigits), 2)
+
+
+def do_repeating_key_xor(plaintext: str, xor_key: str) -> Iterable[int]:
+    return map(
+        lambda pair: operator.xor(pair[0], pair[1]),
+        zip(map(ord, itertools.cycle(xor_key)), map(ord, plaintext))
+    )
+
+
+@functools.singledispatch
+def convert_to_hex(value: Any ) -> Union[str, Iterable[str]]:
+    raise NotImplemented('I dunno')
+
+
+@convert_to_hex.register(int)
+def _(value: int) -> str:
+    return hex(value)[2:].zfill(2)
+
+
+@convert_to_hex.register(collections.Iterable)
+def _(value: Iterable[int]) -> Iterable[str]:  # noqa
+    return map(convert_to_hex, value)
