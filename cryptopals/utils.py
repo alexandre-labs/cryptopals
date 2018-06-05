@@ -4,7 +4,7 @@ import itertools
 import operator
 import random
 import string
-from typing import Any, Iterable, Tuple, Union
+from typing import Any, Generator, Iterable, List, Sequence, Tuple, Union
 
 
 def generate_random_hex_chunks(chunk_size: int = 2) -> str:
@@ -68,3 +68,12 @@ def _(value: int) -> str:
 @convert_to_hex.register(collections.Iterable)
 def _(value: Iterable[int]) -> Iterable[str]:  # noqa
     return map(convert_to_hex, value)
+
+
+def convert_string_to_binary(string: str) -> str:
+    return ' '.join('{0:08b}'.format(ord(char), 'b') for char in string)
+
+
+def calculate_hamming_distance(string_a: str, string_b: str) -> int:
+    return sum(1 if item_a != item_b else 0
+               for item_a, item_b in zip(convert_string_to_binary(string_a), convert_string_to_binary(string_b)))
